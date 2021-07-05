@@ -34,6 +34,8 @@ public class Main {
 		//MusicalChairs.playWithMap();
 		
 		MusicalChairs.playWithSorting();
+		MusicalChairs.playWithMap();
+		
 	}	
 		
 		
