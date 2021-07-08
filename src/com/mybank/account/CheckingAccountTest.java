@@ -2,7 +2,6 @@ package com.mybank.account;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -55,11 +54,30 @@ class CheckingAccountTest {
 	void deposit__amount_equal_to_zero__throws() {
 		// another bad amount
 				double amount = 0.0;
-
 		
 		assertThrows(IllegalArgumentException.class, () -> {
 		account.deposit(amount);
 		});
 				
+	}
+	
+	@Test
+	void withdraw__amount_greater_than_zero__throws() throws InsufficientFundsException {
+		
+		double amount = 10.0;
+		account.deposit(amount +1);	
+		account.withdraw(amount);
+		assertEquals(1.0, account.getBalance());
+		}
+
+					
+	@Test
+	void withdraw__amount_less_than_zero__throws() {
+		
+		double amount = -1.0;
+			
+		assertThrows(IllegalArgumentException.class, () -> {
+			account.withdraw(amount);
+		});
 	}
 }
