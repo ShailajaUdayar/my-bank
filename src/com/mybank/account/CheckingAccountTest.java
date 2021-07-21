@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 class CheckingAccountTest {
 	// class under test
 	CheckingAccount account;
+	CheckingAccount transferTo;
 	
 	@BeforeEach
 	void setup() {
@@ -16,6 +17,13 @@ class CheckingAccountTest {
 				"test account",
 				0,
 				"test account number"
+				);
+		
+		this.transferTo = new CheckingAccount(
+				"customer 2",
+				"test 2 account",
+				0.0,
+				"552252"
 				);
 	}
 	
@@ -80,4 +88,36 @@ class CheckingAccountTest {
 			account.withdraw(amount);
 		});
 	}
+	
+	@Test
+	void checking_account_withdrawal() throws InsufficientFundsException{
+		
+		double withdrawAmount = 500;
+		account.setBalance(withdrawAmount);
+		//double expectedValue = account.withdraw(withdrawAmount);
+		
+		assertEquals(withdrawAmount, account.withdraw(withdrawAmount));
+		
+		double newAmount = -5.6;
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			account.withdraw(newAmount);
+		});
+		
+		assertThrows(InsufficientFundsException.class, () -> {
+			account.withdraw(10);
+		});
+				
+	}
+	
+	@Test
+	void checking_account_Transfer() throws InsufficientFundsException {
+		double amountToTransfer = 50;
+		
+		account.deposit(100);
+		account.transfer(transferTo, amountToTransfer);
+		
+		assertEquals(amountToTransfer, transferTo.getBalance());
+	}
+	
 }
